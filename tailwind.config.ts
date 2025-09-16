@@ -47,6 +47,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        uplight: {
+          primary: "hsl(var(--uplight-primary))",
+          "primary-dark": "hsl(var(--uplight-primary-dark))",
+          accent: "hsl(var(--uplight-accent))",
+          background: "hsl(var(--uplight-background))",
+          grid: "hsl(var(--uplight-grid))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

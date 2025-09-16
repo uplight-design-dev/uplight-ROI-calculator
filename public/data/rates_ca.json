@@ -1,0 +1,227 @@
+{
+  "metadata": {
+    "description": "California energy rate plans for ROI calculator",
+    "last_updated": "2024-01-01",
+    "source": "PG&E and other California utilities",
+    "currency": "USD"
+  },
+  "plans": [
+    {
+      "id": "res_flat_2024",
+      "name": "Residential Flat Rate",
+      "type": "flat",
+      "customer_type": "residential",
+      "utility": "PG&E",
+      "effective_date": "2024-01-01",
+      "fixed_monthly": 10.00,
+      "energy_rate": 0.32,
+      "description": "Simple flat rate for residential customers"
+    },
+    {
+      "id": "res_tou_e1_2024",
+      "name": "Residential TOU (E-1)",
+      "type": "tou",
+      "customer_type": "residential",
+      "utility": "PG&E",
+      "effective_date": "2024-01-01",
+      "fixed_monthly": 10.00,
+      "seasons": {
+        "summer": {"months": [6, 7, 8, 9], "label": "Summer (Jun-Sep)"},
+        "winter": {"months": [1, 2, 3, 4, 5, 10, 11, 12], "label": "Winter (Oct-May)"}
+      },
+      "periods": [
+        {
+          "id": "peak",
+          "label": "Peak",
+          "rate_summer": 0.54,
+          "rate_winter": 0.36,
+          "days": [1, 2, 3, 4, 5],
+          "start": "16:00",
+          "end": "21:00"
+        },
+        {
+          "id": "off_peak",
+          "label": "Off-Peak",
+          "rate_summer": 0.28,
+          "rate_winter": 0.24,
+          "days": [1, 2, 3, 4, 5, 6, 7],
+          "start": "00:00",
+          "end": "16:00"
+        },
+        {
+          "id": "off_peak_evening",
+          "label": "Off-Peak",
+          "rate_summer": 0.28,
+          "rate_winter": 0.24,
+          "days": [1, 2, 3, 4, 5, 6, 7],
+          "start": "21:00",
+          "end": "24:00"
+        }
+      ],
+      "description": "Time-of-Use rate with peak pricing 4-9pm weekdays"
+    },
+    {
+      "id": "res_tou_ev_2024",
+      "name": "Residential EV Rate (EV-A)",
+      "type": "tou",
+      "customer_type": "residential",
+      "utility": "PG&E",
+      "effective_date": "2024-01-01",
+      "fixed_monthly": 10.00,
+      "seasons": {
+        "summer": {"months": [6, 7, 8, 9], "label": "Summer (Jun-Sep)"},
+        "winter": {"months": [1, 2, 3, 4, 5, 10, 11, 12], "label": "Winter (Oct-May)"}
+      },
+      "periods": [
+        {
+          "id": "peak",
+          "label": "Peak",
+          "rate_summer": 0.48,
+          "rate_winter": 0.32,
+          "days": [1, 2, 3, 4, 5],
+          "start": "16:00",
+          "end": "21:00"
+        },
+        {
+          "id": "off_peak",
+          "label": "Off-Peak",
+          "rate_summer": 0.22,
+          "rate_winter": 0.19,
+          "days": [1, 2, 3, 4, 5, 6, 7],
+          "start": "00:00",
+          "end": "16:00"
+        },
+        {
+          "id": "super_off_peak",
+          "label": "Super Off-Peak",
+          "rate_summer": 0.16,
+          "rate_winter": 0.14,
+          "days": [6, 7],
+          "start": "00:00",
+          "end": "24:00"
+        }
+      ],
+      "description": "EV-friendly rate with super off-peak weekend pricing"
+    },
+    {
+      "id": "com_a10_secondary_2024",
+      "name": "Commercial A-10 Secondary",
+      "type": "commercial_demand",
+      "customer_type": "commercial",
+      "utility": "PG&E",
+      "effective_date": "2024-01-01",
+      "fixed_monthly": 28.40,
+      "energy_periods": [
+        {
+          "id": "peak",
+          "label": "Peak",
+          "rate_summer": 0.34,
+          "rate_winter": 0.28,
+          "days": [1, 2, 3, 4, 5],
+          "start": "16:00",
+          "end": "21:00"
+        },
+        {
+          "id": "partial_peak",
+          "label": "Partial Peak",
+          "rate_summer": 0.26,
+          "rate_winter": 0.24,
+          "days": [1, 2, 3, 4, 5],
+          "start": "08:30",
+          "end": "16:00"
+        },
+        {
+          "id": "partial_peak_evening",
+          "label": "Partial Peak",
+          "rate_summer": 0.26,
+          "rate_winter": 0.24,
+          "days": [1, 2, 3, 4, 5],
+          "start": "21:00",
+          "end": "21:30"
+        },
+        {
+          "id": "off_peak",
+          "label": "Off-Peak",
+          "rate_summer": 0.18,
+          "rate_winter": 0.16,
+          "days": [1, 2, 3, 4, 5, 6, 7],
+          "start": "21:30",
+          "end": "08:30"
+        }
+      ],
+      "demand_charges": {
+        "max_kw_summer": 26.28,
+        "max_kw_winter": 21.45,
+        "peak_kw_summer": 18.75,
+        "peak_kw_winter": 12.60,
+        "peak_window": {
+          "start": "16:00",
+          "end": "21:00",
+          "days": [1, 2, 3, 4, 5]
+        }
+      },
+      "description": "Medium commercial rate with demand charges"
+    },
+    {
+      "id": "com_tou_gs3_2024",
+      "name": "Commercial TOU GS-3",
+      "type": "commercial_demand",
+      "customer_type": "commercial",
+      "utility": "PG&E",
+      "effective_date": "2024-01-01",
+      "fixed_monthly": 24.50,
+      "energy_periods": [
+        {
+          "id": "peak",
+          "label": "Peak",
+          "rate_summer": 0.31,
+          "rate_winter": 0.25,
+          "days": [1, 2, 3, 4, 5],
+          "start": "16:00",
+          "end": "21:00"
+        },
+        {
+          "id": "off_peak",
+          "label": "Off-Peak",
+          "rate_summer": 0.19,
+          "rate_winter": 0.17,
+          "days": [1, 2, 3, 4, 5, 6, 7],
+          "start": "00:00",
+          "end": "16:00"
+        },
+        {
+          "id": "off_peak_evening",
+          "label": "Off-Peak",
+          "rate_summer": 0.19,
+          "rate_winter": 0.17,
+          "days": [1, 2, 3, 4, 5, 6, 7],
+          "start": "21:00",
+          "end": "24:00"
+        }
+      ],
+      "demand_charges": {
+        "max_kw_summer": 22.85,
+        "max_kw_winter": 18.40,
+        "peak_kw_summer": 15.20,
+        "peak_kw_winter": 9.85,
+        "peak_window": {
+          "start": "16:00",
+          "end": "21:00",
+          "days": [1, 2, 3, 4, 5]
+        }
+      },
+      "description": "Small to medium commercial TOU with demand charges"
+    },
+    {
+      "id": "com_flat_simple_2024",
+      "name": "Commercial Flat Rate",
+      "type": "flat",
+      "customer_type": "commercial",
+      "utility": "Generic CA",
+      "effective_date": "2024-01-01",
+      "fixed_monthly": 45.00,
+      "energy_rate": 0.22,
+      "description": "Simple flat rate for small commercial customers"
+    }
+  ]
+}
