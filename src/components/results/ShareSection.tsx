@@ -2,8 +2,13 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Share2, Download, Link, Mail, FileText } from "lucide-react";
+import { PDFExport } from "./PDFExport";
 
-export const ShareSection = () => {
+interface ShareSectionProps {
+  calculations?: any;
+}
+
+export const ShareSection = ({ calculations }: ShareSectionProps) => {
   return (
     <section className="uplight-section">
       <Card className="uplight-card text-center">
@@ -19,11 +24,10 @@ export const ShareSection = () => {
           </p>
 
           <div className="flex flex-wrap justify-center gap-3 mb-6">
-            <Button variant="outline" disabled className="flex items-center gap-2">
-              <Download className="w-4 h-4" />
-              Export PDF
-              <Badge variant="secondary" className="ml-1 text-xs">Coming Soon</Badge>
-            </Button>
+            <PDFExport 
+              calculations={calculations}
+              disabled={!calculations}
+            />
             
             <Button variant="outline" disabled className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
@@ -46,8 +50,8 @@ export const ShareSection = () => {
 
           <div className="bg-muted/50 rounded-lg p-4">
             <p className="text-sm text-muted-foreground">
-              <strong>Coming in Phase 2:</strong> Advanced sharing capabilities including PDF reports, 
-              CSV data exports, permalink URLs, and integrated email delivery. 
+              <strong>New:</strong> PDF export is now available! Additional sharing capabilities including 
+              CSV data exports, permalink URLs, and integrated email delivery coming in Phase 2. 
               Multi-site portfolio analysis and benchmarking features will also be available.
             </p>
           </div>

@@ -10,6 +10,8 @@ import { LoadCurveChart } from "@/components/results/LoadCurveChart";
 import { CostBreakdownChart } from "@/components/results/CostBreakdownChart";
 import { SavingsTable } from "@/components/results/SavingsTable";
 import { ShareSection } from "@/components/results/ShareSection";
+import { CustomerMap } from "@/components/results/CustomerMap";
+import { OnboardingFlow } from "@/components/onboarding/OnboardingFlow";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Calculator, RotateCcw, Info } from "lucide-react";
@@ -40,8 +42,25 @@ export interface RatePlan {
   [key: string]: any;
 }
 
+interface OnboardingData {
+  utilityName: string;
+  utilityType: string;
+  customerBase: string;
+  primaryGoals: string[];
+  programBudget: string;
+  timeframe: string;
+  additionalInfo: string;
+}
+
 const Index = () => {
   const { toast } = useToast();
+  
+  // Onboarding state
+  const [showOnboarding, setShowOnboarding] = useState(() => {
+    // Check if user has completed onboarding before
+    return !localStorage.getItem('uplight-onboarding-completed');
+  });
+  const [onboardingData, setOnboardingData] = useState<OnboardingData | null>(null);
   
   // Input States
   const [customerData, setCustomerData] = useState<CustomerData>({
@@ -69,6 +88,23 @@ const Index = () => {
     programSettings,
     enabled: hasCalculated
   });
+
+  const handleOnboardingComplete = useCallback((data: OnboardingData) => {
+    setOnboardingData(data);
+    setShowOnboarding(false);
+    localStorage.setItem('uplight-onboarding-completed', 'true');
+    localStorage.setItem('uplight-onboarding-data', JSON.stringify(data));
+    
+    toast({
+      title: "Welcome to Uplight ROI Calculator!",
+      description: `Thanks for the info, ${data.utilityName}. Let's calculate your ROI.`
+    });
+  }, [toast]);
+
+  const handleOnboardingSkip = useCallback(() => {
+    setShowOnboarding(false);
+    localStorage.setItem('uplight-onboarding-completed', 'true');
+  }, []);
   
   const handleCalculate = useCallback(() => {
     if (!selectedRatePlan) {
@@ -116,6 +152,16 @@ const Index = () => {
             customerData.manualData);
   }, [selectedRatePlan, customerData]);
 
+  // Show onboarding flow if not completed
+  if (showOnboarding) {
+    return (
+      <OnboardingFlow 
+        onComplete={handleOnboardingComplete}
+        onSkip={handleOnboardingSkip}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -131,9 +177,16 @@ const Index = () => {
             Model energy and demand savings for residential and commercial customers. 
             Calculate ROI, payback periods, and visualize load impacts with California rate plans.
           </p>
+          {onboardingData && (
+            <div className="mt-4 text-sm text-muted-foreground">
+              Configured for: <span className="font-medium">{onboardingData.utilityName}</span> • 
+              {onboardingData.customerBase} customers
+            </div>
+          )}
         </div>
 
-        {/* Inputs Section */}
+        {/* ... keep existing code (Inputs Section) */}
+        
         <section className="uplight-section">
           <div className="uplight-card">
             <div className="flex items-center gap-3 mb-6">
@@ -209,9 +262,18 @@ const Index = () => {
         {/* Results Section */}
         {hasCalculated && calculations.data && (
           <>
-            <ResultsSummary calculations={calculations.data} />
+            <div data-pdf-capture="results">
+              <ResultsSummary calculations={calculations.data} />
+            </div>
             
-            <section className="uplight-section">
+            <section className="uplight-section" data-pdf-capture="map">
+              <CustomerMap 
+                zipCode={customerData.zipCode || '94103'}
+                customerType={customerData.type}
+              />
+            </section>
+            
+            <section className="uplight-section" data-pdf-capture="charts">
               <div className="grid lg:grid-cols-2 gap-8">
                 <LoadCurveChart 
                   data={calculations.data.hourlyData}
@@ -228,7 +290,7 @@ const Index = () => {
           </>
         )}
         
-        <ShareSection />
+        <ShareSection calculations={hasCalculated ? calculations.data : null} />
       </main>
     </div>
   );

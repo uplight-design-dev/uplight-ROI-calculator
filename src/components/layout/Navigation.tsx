@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Share2, Zap } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import uplightLogo from "@/assets/uplight-logo.png";
 
 export const Navigation = () => {
   return (
@@ -8,8 +10,12 @@ export const Navigation = () => {
       <div className="container mx-auto px-6 h-full flex items-center justify-between max-w-7xl">
         {/* Logo & Title */}
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-primary to-uplight-primary-dark flex items-center justify-center">
-            <Zap className="w-6 h-6 text-white" />
+          <div className="w-10 h-10 rounded-lg overflow-hidden">
+            <img 
+              src={uplightLogo} 
+              alt="Uplight ROI Calculator" 
+              className="w-full h-full object-contain"
+            />
           </div>
           <div>
             <h1 className="text-xl font-bold uplight-gradient-text">
@@ -20,6 +26,7 @@ export const Navigation = () => {
         
         {/* Actions */}
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <Button variant="outline" size="sm" disabled>
             <Share2 className="w-4 h-4 mr-2" />
             Share
