@@ -1,6 +1,6 @@
 # Welcome to the Uplight ROI Calculator
 
-## Project info
+## Click this link to view the ROI calculator via loveable.dev
 
 **URL**: https://lovable.dev/projects/eb372381-6451-4d2e-acf9-8d8edeb515f9
 
