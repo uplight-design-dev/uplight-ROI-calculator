@@ -38,19 +38,23 @@ export const CustomerMap = ({ zipCode, customerType }: CustomerMapProps) => {
     
     const ctx = canvas.getContext('2d');
     if (ctx) {
+      // Get computed colors from CSS variables
+      const computedStyle = getComputedStyle(document.documentElement);
+      const isDark = document.documentElement.classList.contains('dark');
+      
       // Draw map background
-      ctx.fillStyle = 'hsl(var(--muted))';
+      ctx.fillStyle = isDark ? '#1a1a1a' : '#f1f5f9';
       ctx.fillRect(0, 0, 400, 300);
       
       // Draw zip code area
-      ctx.fillStyle = 'hsl(var(--primary) / 0.2)';
+      ctx.fillStyle = isDark ? 'rgba(0, 71, 255, 0.3)' : 'rgba(7, 78, 255, 0.2)';
       ctx.fillRect(50, 50, 300, 200);
       
       // Draw customer density points
       for (let i = 0; i < 20; i++) {
         ctx.fillStyle = customerType === 'residential' 
-          ? 'hsl(var(--accent))' 
-          : 'hsl(var(--primary))';
+          ? (isDark ? '#00E297' : '#00E4A0')
+          : (isDark ? '#0047FF' : '#074EFF');
         ctx.beginPath();
         ctx.arc(
           80 + Math.random() * 240,
@@ -63,7 +67,7 @@ export const CustomerMap = ({ zipCode, customerType }: CustomerMapProps) => {
       }
       
       // Add labels
-      ctx.fillStyle = 'hsl(var(--foreground))';
+      ctx.fillStyle = isDark ? '#ffffff' : '#0f172a';
       ctx.font = '14px sans-serif';
       ctx.fillText(`ZIP ${zipCode}`, 60, 40);
     }
